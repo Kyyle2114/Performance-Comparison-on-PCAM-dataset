@@ -4,7 +4,7 @@ import torchvision.transforms as tr
 from torch.utils.data import DataLoader
 import os
 
-from .seed import seed_everything
+from utils.seed import seed_everything
 
 def download_pcam():
     """
@@ -43,6 +43,7 @@ def load_pcam(path='./data', input_shape=224, augmentation=True, normalize=True,
         DataLoader: train/val/test DataLoader
     """
     
+    # set seed 
     seed_everything(seed)
     
     if download:
@@ -60,6 +61,7 @@ def load_pcam(path='./data', input_shape=224, augmentation=True, normalize=True,
     tf_list.append(tr.ToTensor())
     
     if normalize:
+        # pre-computed statistic
         tf_list.append(tr.Normalize(mean=[0.70075595, 0.53835785, 0.6916205], 
                                     std=[0.18174392, 0.20083658, 0.16479422]))
 
