@@ -4,6 +4,52 @@ import numpy as np
 
 from tqdm import tqdm 
 
+"""
+---
+Training code example 
+---
+
+model = SomeModel(...).to(device)
+
+criterion = nn.BCELoss()
+optimizer = optim.Adam(model.parameters(), lr = 1e-4, weight_decay=1e-5)
+es = EarlyStopping(patience=10, delta=0, mode='min', verbose=True)
+scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=20, gamma=0.99)
+
+history = {'train_loss' : [],
+           'val_loss': [],
+           'train_accuracy': [],
+           'val_accuracy': []}
+           
+EPOCHS = 100
+max_loss = np.inf           
+
+for epoch in range(EPOCHS):
+    train_loss, train_acc = model_train(model=model, data_loader=train_loader, criterion=criterion, optimizer=optimizer, device=device, scheduler=scheduler, tqdm_disable=False)
+    val_loss, val_acc = model_evaluate(model=model, data_loader=val_loader, criterion=criterion, device=device)
+    
+    history['train_loss'].append(train_loss)
+    history['train_accuracy'].append(train_acc)
+    history['val_loss'].append(val_loss)
+    history['val_accuracy'].append(val_acc)
+    
+    es(val_acc)
+    # Early Stop Check
+    if es.early_stop:
+        break
+
+    if val_loss < max_loss:
+        print(f'[INFO] val_loss has been improved from {max_loss:.5f} to {val_loss:.5f}. Save model.')
+        max_loss = val_loss
+        torch.save(model.state_dict(), 'Best_Model.pth')
+
+    print(f'epoch {epoch+1:02d}, loss: {train_loss:.5f}, accuracy: {train_acc:.5f}, val_loss: {val_loss:.5f}, val_accuracy: {val_acc:.5f} \n')
+
+---
+"""
+
+
+
 def model_train(model, data_loader, criterion, optimizer, device, scheduler=None, tqdm_disable=False):
     """
     Model train
@@ -26,12 +72,12 @@ def model_train(model, data_loader, criterion, optimizer, device, scheduler=None
     correct = 0
 
     for X, y in tqdm(data_loader, disable=tqdm_disable):
-        X, y = X.to(device), y.to(device)
+        X, y = X.to(device), y.float().to(device)
         
         optimizer.zero_grad()
         
         output = model(X)
-        output = torch.sigmoid(output)
+        output = torch.sigmoid(output).squeeze()
         loss = criterion(output, y)
         loss.backward()
         optimizer.step()
@@ -70,10 +116,10 @@ def model_evaluate(model, data_loader, criterion, device):
         correct = 0
 
         for X, y in data_loader:
-            X, y = X.to(device), y.to(device)   
+            X, y = X.to(device), y.float().to(device)   
             
             output = model(X)
-            output = torch.sigmoid(output)
+            output = torch.sigmoid(output).squeeze()
             
             # binary classification
             pred = output >= torch.FloatTensor([0.5]).to(device)
