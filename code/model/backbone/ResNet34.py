@@ -19,13 +19,13 @@ class ResNet34_Backbone(nn.Module):
         if pretrain:
             self.backbone = models.resnet34(weights='IMAGENET1K_V1')
         else:
-            self.backbone = models.resnet34(pretrain=pretrain)
+            self.backbone = models.resnet34(pretrained=pretrain)
             self._initialize_weights()
             
-        self.features = nn.Sequential(*list(self.backbone.children())[:-2])
+        self.backbone_features = nn.Sequential(*list(self.backbone.children())[:-2])
 
     def forward(self, x):
-        x = self.features(x)
+        x = self.backbone_features(x)
         return x 
     
     def _initialize_weights(self):

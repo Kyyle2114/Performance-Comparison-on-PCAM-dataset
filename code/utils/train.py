@@ -52,14 +52,14 @@ for epoch in range(EPOCHS):
 
 def model_train(model, data_loader, criterion, optimizer, device, scheduler=None, tqdm_disable=False):
     """
-    Model train
+    Model train (for binary classification)
 
     Args:
-        model (torch Model)
-        data_loader (torch DataLoader)
+        model (torch model)
+        data_loader (torch dataLoader)
         criterion (torch loss)
         optimizer (torch optimizer)
-        device (devide): cpu / cuda / mps 
+        device (str): 'cpu' / 'cuda' / 'mps'
         scheduler (torch scheduler, optional): lr scheduler. Defaults to None.
         tqdm_disable (bool, optional): if True, tqdm progress bars will be removed. Defaults to False.
 
@@ -98,13 +98,13 @@ def model_train(model, data_loader, criterion, optimizer, device, scheduler=None
 
 def model_evaluate(model, data_loader, criterion, device):
     """
-    Model train
+    Model train (for binary classification)
 
     Args:
-        model (torch Model)
-        data_loader (torch DataLoader)
+        model (torch model)
+        data_loader (torch dataLoader)
         criterion (torch loss)
-        device (devide): cpu / cuda / mps 
+        device (str): 'cpu' / 'cuda' / 'mps'
 
     Returns:
         loss, accuracy: Avg loss, acc for 1 epoch  

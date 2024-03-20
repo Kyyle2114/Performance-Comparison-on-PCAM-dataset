@@ -2,6 +2,12 @@
 
 Self-Supervised Learning, SimCLR vs. Transfer Learning, pretrained weight (ImageNet) 
 
+Dataset
+- [PCam dataset](https://github.com/basveeling/pcam)
+- PCam dataset consists of 327.680 color images (96 x 96px) extracted from histopathologic scans of lymph node sections.
+- Each image is annoted with a binary label indicating presence of metastatic tissue.
+- PCam provides a new benchmark for machine learning models: bigger than CIFAR10, smaller than imagenet, trainable on a single GPU.
+
 Experimental setup list
 1. Frozen, ImageNet weight 
 2. Fine tuning, ImageNet weight 

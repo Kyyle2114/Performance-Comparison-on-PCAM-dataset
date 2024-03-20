@@ -19,13 +19,13 @@ class VGG16_Backbone(nn.Module):
         if pretrain:
             self.backbone = models.vgg16(weights='IMAGENET1K_V1')
         else:
-            self.backbone = models.vgg16(pretrain=pretrain)
+            self.backbone = models.vgg16(pretrained=pretrain)
             self._initialize_weights()
             
-        self.features = nn.Sequential(*list(self.backbone.features.children()))
+        self.backbone_features = nn.Sequential(*list(self.backbone.features.children()))
 
     def forward(self, x):
-        x = self.features(x)
+        x = self.backbone_features(x)
         return x 
     
     def _initialize_weights(self):

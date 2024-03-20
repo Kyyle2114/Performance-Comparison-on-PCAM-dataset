@@ -14,22 +14,20 @@ class BasicClassifier(nn.Module):
         """
         super(BasicClassifier, self).__init__()
         
-        self.backbone = backbone
+        self.backbone = backbone.backbone_features
         
         if freezing:
             for param in self.backbone.parameters():
                 param.requires_grad = False
-        
-        self.avg_pool = nn.AdaptiveAvgPool2d((1, 1))
-        self.fc1 = nn.Linear(512 * 1 * 1, 32)  
-        self.dropout = nn.Dropout(0.5)
-        self.fc2 = nn.Linear(32, num_classes)
+                
+        self.fc = nn.Sequential(nn.AdaptiveAvgPool2d((1, 1)), 
+                                nn.Flatten(),
+                                nn.Linear(512, 64),
+                                nn.ReLU(),
+                                nn.Dropout(0.5),
+                                nn.Linear(64, num_classes))                   
 
     def forward(self, x):
         x = self.backbone(x)
-        x = self.avg_pool(x)
-        x = x.view(x.size(0), -1)
-        x = self.fc1(x)
-        x = self.dropout(x)
-        output = self.fc2(x)
+        output = self.fc(x)
         return output

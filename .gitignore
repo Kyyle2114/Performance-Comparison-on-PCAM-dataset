@@ -1,6 +1,9 @@
 # dataset 
 code/data/data
 
+# log
+code/runs
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
