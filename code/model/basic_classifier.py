@@ -19,9 +19,9 @@ class BasicClassifier(nn.Module):
         if freezing:
             for param in self.backbone.parameters():
                 param.requires_grad = False
-                
-        self.fc = nn.Sequential(nn.AdaptiveAvgPool2d((1, 1)), 
-                                nn.Flatten(),
+        
+        self.avg = nn.AdaptiveAvgPool2d((1, 1))
+        self.fc = nn.Sequential(nn.Flatten(),
                                 nn.Linear(512, 64),
                                 nn.ReLU(),
                                 nn.Dropout(0.5),
@@ -29,5 +29,6 @@ class BasicClassifier(nn.Module):
 
     def forward(self, x):
         x = self.backbone(x)
+        x = self.avg(x)
         output = self.fc(x)
         return output
