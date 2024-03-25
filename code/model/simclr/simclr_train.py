@@ -99,6 +99,7 @@ class SimCLR(object):
         n_iter = 0
         logging.info(f"Start SimCLR training for {self.epochs} epochs.")
         logging.info(f"Training with: {self.device} device.")
+        logging.info(f"SimCLR Setting: {self.metadata}\n")
 
         for epoch_counter in range(self.epochs):
             for images, _ in tqdm(train_loader):

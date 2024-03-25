@@ -19,3 +19,9 @@ Experimental setup list
 Backbone list 
 1. VGG16 (pytorch implementation)
 2. ResNet34 (pytorch implementation)
+
+---
+
+requirements.txt
+- for Windows
+- for CUDA version 12.4

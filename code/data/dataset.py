@@ -26,7 +26,7 @@ def download_pcam():
             os.remove(file_path)
     
     
-def load_pcam(path='./data', input_shape=96, augmentation=True, normalize=True, batch_size=16, seed=21):
+def load_pcam(path='./data', input_shape=96, augmentation=True, normalize=True, batch_size=256, seed=21):
     """
     Load PCAM dataset (already downloaded)
 
@@ -35,7 +35,7 @@ def load_pcam(path='./data', input_shape=96, augmentation=True, normalize=True, 
         input_shape (int, optional): size of input, (input_shape x input_shape). Defaults to 96.
         augmentation (bool, optional): if True, data augmentation will be applied on train dataloader. Defaults to True.
         normalize (bool, optional): if True, image normaliztion will be applied. Defaults to True.
-        batch_size (int, optional): batch size in dataloader. Defaults to 16.
+        batch_size (int, optional): batch size in dataloader. Defaults to 256.
         seed (int, optional): set random seed. Defaults to 21.
 
     Returns:
