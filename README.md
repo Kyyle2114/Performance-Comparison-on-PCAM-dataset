@@ -24,3 +24,5 @@ Self-Supervised Learning, SimCLR vs. Transfer Learning, pretrained weight (Image
 requirements.txt
 - for Windows (pip list ...)
 - for CUDA version 12.4
+
+Korean tutorials : [my velog](https://velog.io/@kyyle/Transfer-Learning-SimCLR-with-PyTorch)
